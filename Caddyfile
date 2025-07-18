@@ -1,0 +1,14 @@
+:80 {
+  redir https://{host}{uri} 301
+}
+
+:443 {
+  encode gzip
+  reverse_proxy /grafana* grafana:3000
+  reverse_proxy /zabbix* zabbix-web:8080
+  reverse_proxy /prometheus* prometheus:9090
+  reverse_proxy /alertmanager* alertmanager:9093
+  reverse_proxy /cadvisor* cadvisor:8080
+
+  tls email@ton-domaine.com
+}
